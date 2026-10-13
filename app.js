@@ -52,9 +52,16 @@
   // Reduce Motion: the loop rests on its first frame, as in the app.
   if (!matchMedia('(prefers-reduced-motion: reduce)').matches) setInterval(() => draw(push()), TICK);
 
-  const links = document.querySelectorAll('.links a');
+  const strip = $('.links'), links = strip.querySelectorAll('a');
+  const smooth = matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth';
   const io = new IntersectionObserver((es) => es.forEach((e) => {
-    if (e.isIntersecting) links.forEach((a) => a.classList.toggle('on', a.hash === '#' + e.target.id));
+    if (!e.isIntersecting) return;
+    links.forEach((a) => {
+      const on = a.hash === '#' + e.target.id;
+      a.classList.toggle('on', on);
+      // on phones the links are a swipeable strip: bring the current one to its middle
+      if (on && strip.scrollWidth > strip.clientWidth) strip.scrollTo({ left: a.offsetLeft - (strip.clientWidth - a.offsetWidth) / 2, behavior: smooth });
+    });
   }), { rootMargin: '-45% 0px -54% 0px' });
   document.querySelectorAll('main section').forEach((s) => io.observe(s));
 })();
