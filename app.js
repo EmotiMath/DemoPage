@@ -36,8 +36,21 @@
   const tabs = document.querySelectorAll('.rtab'), arts = document.querySelectorAll('.rart > div');
   const moved = (ev) => /^(advance|retreat)/.test(ev);
   let age = 2;
+  // the hand-drawn wobble lives in the points, fixed to the screen like the old SVG filter (filters render soft on phones)
+  const wob = (x) => 0.75 * Math.sin(x * 0.031) + 0.45 * Math.sin(x * 0.083 + 1.3);
+  const trace = () => {
+    const pts = [], dx = W / (H - 1);
+    hist.forEach((h, i) => {
+      for (let t = 0; t < (i < H - 1 ? 1 : 0.01); t += 1 / 3) {
+        const x = (i + t) * dx, v = t ? h.ema + (hist[i + 1].ema - h.ema) * t : h.ema;
+        pts.push(x.toFixed(1) + ',' + (y(v) + wob(x)).toFixed(1));
+      }
+    });
+    line.setAttribute('points', pts.join(' '));
+  };
+  trace();
   function draw(s) {
-    line.setAttribute('points', hist.map((h, i) => (i * W / (H - 1)).toFixed(1) + ',' + y(h.ema).toFixed(1)).join(' '));
+    trace();
     pins.innerHTML = hist.map((h, i) => moved(h.ev)
       ? `<span class="pin" style="left:${(i * 100 / (H - 1)).toFixed(2)}%;top:${y(h.ema).toFixed(1)}px;background:${ST[h.stage]};color:${INK[h.stage]}">${h.stage + 1}</span>` : '').join('');
     dot.style.top = y(s.ema).toFixed(1) + 'px';
