@@ -1,38 +1,86 @@
 // The readings loop (a port of the app's ReadingsLoop.tsx) and the nav underline.
 (() => {
-  const RAW = [0.22, 0.18, 0.25, 0.2, 0.24, 0.21, 0.27, 0.23, 0.26, 0.3, 0.38, 0.44, 0.93, 0.46, 0.5, null, 0.62, 0.78, 0.88, 0.93, 0.9, 0.88, 0.84, 0.86, 0.8, 0.72, 0.55, 0.42, 0.34, 0.26, 0.2, 0.18, 0.22, 0.19, 0.24], LOW = 0.38, HIGH = 0.65, ALPHA = 0.2, DWELL = 4, TICK = 1500, W = 1000, TH = 96;
-  const CAP = {"advance1": "Calm for a while — on to dots.", "advance2": "Still easy. Now just the numbers.", "retreat1": "The answer is still right, but the load climbed. Back to dots.", "retreat0": "Still too much. Back to things you can count.", "holdUp": "Still high — but it just changed. Give it a moment.", "holdDown": "Easy again — but it just changed. Give it a moment.", "patience": "Calm once is not enough. It waits to be sure.", "spike": "One jumpy reading. Ignored.", "skip": "The hand moved — that moment is skipped.", "floor": "As concrete as it gets. It stays here until things settle.", "band": "Comfortable. The lesson carries on."}, ST = ["#FFC933", "#8A5A33", "#C9B6E8"], INK = ["#1B1B1B", "#FFFFFF", "#1B1B1B"], H = RAW.length + 1;
+  // one reading per 5 s window; null = window skipped for movement. Ends where it starts, so it loops.
+  const RAW = [0.22, 0.18, 0.25, 0.2, 0.24, 0.21, 0.27, 0.23, 0.26, 0.22, 0.2, 0.24,
+    0.28, 0.34, 0.42, 0.5, 0.93, 0.58, 0.66, null, 0.78, 0.86, 0.9, 0.88, 0.84, 0.86, 0.88, 0.85,
+    0.83, 0.86, 0.84, 0.82, 0.86, 0.84, 0.8, 0.72, 0.55, 0.42, 0.34, 0.26, 0.2, 0.18, 0.22, 0.19,
+    0.24, 0.2, 0.22];
+  // where a learner turn ends in that window: R a right answer, W a wrong or unsure one
+  const TURN = RAW.map((_, i) => i === 3 || i === 11 ? 'R' : [8, 24, 29, 36, 44].includes(i) ? 'W' : '');
+  const LOW = 0.38, HIGH = 0.65, ALPHA = 0.2, DWELL = 4, SHIELD = 18, TICK = 1500, W = 1000, TH = 96;
+  const CAP = {
+    advance1: 'Calm, and that answer was right. On to dots.',
+    advance2: 'Still calm, right again. Now just the numbers.',
+    retreat1: 'Still high, and that answer missed. Now it steps back to dots.',
+    retreat0: 'Still too much. Back to things you can count.',
+    arm: 'The load is high. The tutor slows down, and the picture waits for the learner to finish.',
+    armed: 'Still high. A step back waits for the end of their turn.',
+    shield: 'They got one right a moment ago, so the picture stays for now.',
+    rightUnderLoad: 'High load, but that answer was right. The picture stays.',
+    disarm: 'The load eased before their turn ended. Nothing to undo.',
+    offer: 'Calm for a while. It may move on, once this one is answered.',
+    offered: 'Still calm. It moves on as soon as this one is answered right.',
+    notYet: 'Room to move on, but that answer missed. Not yet.',
+    rising: 'Rising. The smoothed load has not crossed the line yet.',
+    holdUp: 'Still high, but the picture just changed. Give it a moment.',
+    holdDown: 'Easy again, but the picture just changed. Give it a moment.',
+    patience: 'Calm once is not enough. It waits to be sure.',
+    spike: 'One jumpy reading. Ignored.',
+    skip: 'The hand moved, so that moment is skipped.',
+    floor: 'As concrete as it gets. It stays here until things settle.',
+    band: 'Comfortable. The lesson carries on.',
+  };
+  // events that take the caption line at once instead of waiting their turn
+  const LOUD = /^(advance|retreat|arm$|offer|shield|rightUnderLoad|disarm)/;
+  const ST = ['#FFC933', '#8A5A33', '#C9B6E8'], INK = ['#1B1B1B', '#FFFFFF', '#1B1B1B'], H = RAW.length + 1;
   const y = (v) => TH - 6 - v * (TH - 12), $ = (s) => document.querySelector(s);
-  const f = { ema: RAW[0], stage: 0, since: DWELL, below: 0 };
-  function step(r) {
+  // the controller (EMA, band, patience, dwell) fires; the session decides, at a turn end, whether the picture moves
+  const f = { ema: RAW[0], stage: 0, since: DWELL, below: 0, armed: false, offer: false, ok: false, w: 0, lastRight: -SHIELD };
+  const move = (d) => {
+    f.stage += d; f.since = 0; f.below = 0; f.armed = f.offer = f.ok = false;
+    return (d > 0 ? 'advance' : 'retreat') + f.stage;
+  };
+  function step(r, turn) {
+    f.w++;
     if (r === null) return 'skip';
     f.since++; f.ema = ALPHA * r + (1 - ALPHA) * f.ema;
+    let ev = r > HIGH ? (r - f.ema > 0.3 ? 'spike' : 'rising') : 'band';
     if (f.ema >= HIGH) {
       f.below = 0;
-      if (f.stage === 0) return 'floor';
-      if (f.since < DWELL) return 'holdUp';
-      f.stage--; f.since = 0; return 'retreat' + f.stage;
-    }
-    if (f.ema <= LOW) {
+      ev = f.stage === 0 ? 'floor' : f.since < DWELL ? 'holdUp' : 'retreat';
+    } else if (f.ema <= LOW) {
       f.below++;
-      if (f.stage === 2) return 'band';
-      if (f.below < 2) return 'patience';
-      if (f.since < DWELL) return 'holdDown';
-      f.stage++; f.since = 0; f.below = 0; return 'advance' + f.stage;
+      ev = f.stage === 2 ? 'band' : f.below < 2 ? 'patience' : f.since < DWELL ? 'holdDown' : 'advance';
+    } else f.below = 0;
+    // the arm lasts only while the controller still sees overload
+    if (f.armed && f.ema < HIGH) { f.armed = false; ev = 'disarm'; }
+    if (ev === 'retreat' || ev === 'advance') {
+      f.since = 0; f.below = 0;
+      if (ev === 'advance') { f.armed = false; f.offer = true; ev = 'offer'; }
+      else { ev = f.armed ? 'armed' : 'arm'; f.armed = true; f.offer = false; }
+    } else if (f.armed) ev = 'armed';
+    else if (f.offer && ev !== 'rising' && ev !== 'spike') ev = 'offered';
+    if (!turn) return ev;
+    // a turn end: the only moment the picture moves
+    if (turn === 'R') { f.lastRight = f.w; f.ok = true; }
+    if (f.armed) {
+      if (turn === 'R') { f.armed = false; return 'rightUnderLoad'; }
+      if (f.w - f.lastRight < SHIELD) return 'shield';
+      return move(-1);
     }
-    f.below = 0;
-    return r > HIGH ? 'spike' : 'band';
+    if (f.offer) return f.ok ? move(1) : 'notYet';
+    return ev;
   }
   const hist = []; let k = 0;
   const push = () => {
-    const ev = step(RAW[k++ % RAW.length]);
-    hist.push({ ema: f.ema, ev, stage: f.stage });
+    const i = k++ % RAW.length, ev = step(RAW[i], TURN[i]);
+    hist.push({ ema: f.ema, ev, stage: f.stage, armed: f.armed });
     if (hist.length > H) hist.shift();
     return hist[hist.length - 1];
   };
-  for (let i = 0; i < H; i++) push();   // the same first frame the page was built with
+  for (let i = 0; i < H; i++) push();   // a full, already-lived trace behind it
 
-  const line = $('#rl-line'), pins = $('#rl-pins'), dot = $('#rl-dot'), val = $('#rl-val'), zone = $('#rl-zone'), cap = $('#rl-cap');
+  const line = $('#rl-line'), pins = $('#rl-pins'), dot = $('#rl-dot'), val = $('#rl-val'), zone = $('#rl-zone'), arm = $('#rl-arm'), cap = $('#rl-cap');
   const tabs = document.querySelectorAll('.rtab'), arts = document.querySelectorAll('.rart > div');
   const moved = (ev) => /^(advance|retreat)/.test(ev);
   let age = 2;
@@ -48,7 +96,6 @@
     });
     line.setAttribute('points', pts.join(' '));
   };
-  trace();
   function draw(s) {
     trace();
     pins.innerHTML = hist.map((h, i) => moved(h.ev)
@@ -57,12 +104,14 @@
     val.textContent = s.ema.toFixed(2);
     const z = s.ema > HIGH ? 'high' : s.ema < LOW ? 'easy' : 'keep';
     zone.textContent = z; zone.classList.toggle('high', z === 'high');
+    arm.hidden = !s.armed;
     tabs.forEach((t, i) => t.classList.toggle('on', i === s.stage));
     arts.forEach((a, i) => a.classList.toggle('on', i === s.stage));
-    // captions stay up long enough to read; a stage change always takes the line
-    if (moved(s.ev) || (++age >= 2 && cap.textContent !== CAP[s.ev])) { age = 0; cap.textContent = CAP[s.ev]; }
+    // captions stay up long enough to read; a decision always takes the line
+    if (LOUD.test(s.ev) || (++age >= 2 && cap.textContent !== CAP[s.ev])) { age = 0; cap.textContent = CAP[s.ev]; }
   }
-  // Reduce Motion: the loop rests on its first frame, as in the app.
+  draw(push());
+  // Reduce Motion: the loop rests on its opening frame.
   if (!matchMedia('(prefers-reduced-motion: reduce)').matches) setInterval(() => draw(push()), TICK);
 
   const strip = $('.links'), links = strip.querySelectorAll('a');

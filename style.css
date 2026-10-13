@@ -142,10 +142,11 @@ h2 { font-size: clamp(28px, 3.6vw, 44px); line-height: 1.12; letter-spacing: -0.
 @media (min-width: 920px) { .steps { grid-template-columns: repeat(4, 1fr); } }
 
 /* the loop */
-.trace-head { display: flex; justify-content: space-between; align-items: center; gap: 12px; margin-left: 48px; }
-.read { display: flex; align-items: center; gap: 6px; margin: 0; }
+.trace-head { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 4px 12px; margin-left: 48px; }
+.read { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; margin: 0; }
 .val { font-family: var(--hand); font-size: 17px; min-width: 44px; text-align: right; font-variant-numeric: tabular-nums; }
 #rl-zone { background: var(--paper); } #rl-zone.high { background: var(--hot); }
+#rl-arm { background: var(--paper); box-shadow: inset 0 0 0 1.5px var(--hot); }
 .trace { display: flex; gap: 10px; margin-top: 4px; }
 .zones { position: relative; width: 38px; height: 96px; flex: none; }
 .zones span { position: absolute; left: 0; font-family: var(--hand); font-size: 14px; line-height: 18px; color: var(--mute); }
@@ -175,7 +176,7 @@ h2 { font-size: clamp(28px, 3.6vw, 44px); line-height: 1.12; letter-spacing: -0.
 .rcap { text-align: center; max-width: 520px; margin: 8px auto 0; color: var(--mute); font-size: 15.5px; line-height: 23px; min-height: 46px; }
 @media (min-width: 920px) { .rrow { flex-direction: row; align-items: stretch; gap: 34px; }
   .rtabs { flex-direction: column; flex-wrap: nowrap; width: 280px; } .rtab { flex: 1; } .rstage { flex: 1; } }
-@media (max-width: 599px) { .trace-head { margin-left: 0; } .pin { width: 15px; height: 15px; font-size: 9px; }
+@media (max-width: 599px) { .trace-head { margin-left: 0; flex-direction: column; align-items: flex-start; } .read { min-height: 26px; } .pin { width: 15px; height: 15px; font-size: 9px; }
   /* the three stages sit in one row so the stage they drive stays close to the trace */
   .rrow { gap: 14px; margin-top: 18px; }
   .rtabs { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
