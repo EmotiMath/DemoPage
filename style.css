@@ -33,10 +33,15 @@ nav .btn { margin-left: auto; }
 /* sections: one idea per screen */
 section { min-height: calc(100svh - var(--nav)); display: flex; align-items: center; padding: clamp(32px, 6vh, 72px) 0; scroll-snap-align: start; }
 section.alt { background: var(--soft); }
+/* phones and short landscape screens: sections outgrow one screen, so drop the snap and the full-screen height */
+@media (max-width: 759px), (max-height: 599px) {
+  html { scroll-snap-type: none; }
+  section { min-height: 0; padding: 56px 0; }
+}
 .tag { font-family: var(--hand); font-size: 17px; color: var(--mute); margin: 0; }
 .head { max-width: 640px; margin-bottom: clamp(22px, 3.6vh, 44px); }
 .head .tag { margin-bottom: 6px; }
-h1, h2, h3 { margin: 0; font-weight: 800; }
+h1, h2, h3 { margin: 0; font-weight: 800; text-wrap: balance; }
 h1 { font-size: clamp(40px, 5.6vw, 72px); line-height: 1.06; letter-spacing: -0.04em; }
 h2 { font-size: clamp(28px, 3.6vw, 44px); line-height: 1.12; letter-spacing: -0.03em; }
 .lede { margin: 14px 0 0; font-size: clamp(17px, 1.6vw, 19px); line-height: 30px; color: var(--mute); }
@@ -71,6 +76,15 @@ h2 { font-size: clamp(28px, 3.6vw, 44px); line-height: 1.12; letter-spacing: -0.
 .cause { font-family: var(--hand); font-size: 15px; padding: 1px 10px; border-radius: 13px 5px 12px 6px; white-space: nowrap; }
 .calm { background: var(--leaf); } .high { background: var(--hot); }
 .wide-only { display: none; }
+@media (max-width: 599px) {
+  .card { display: grid; grid-template-columns: clamp(92px, 30vw, 124px) 1fr; column-gap: 18px; align-items: center; padding: 12px 18px; text-align: left; }
+  .card .art { grid-row: span 2; height: 76px; }
+  .card .art img { width: 100%; }
+  .card strong { margin-top: 0; align-self: end; white-space: nowrap; }
+  .card small { align-self: start; }
+  .card .numbers { font-size: clamp(17px, 5.6vw, 21px); line-height: 28px; padding: 0 6px; white-space: nowrap; }
+  .card .numbers::before { bottom: 5px; height: 10px; }
+}
 @media (min-width: 1080px) {
   .ladder { flex-direction: row; align-items: stretch; } .ladder .card { flex: 1; }
   .move { flex-direction: column; align-items: center; gap: 8px; padding: 0 4px; }
@@ -121,7 +135,16 @@ h2 { font-size: clamp(28px, 3.6vw, 44px); line-height: 1.12; letter-spacing: -0.
 .rcap { text-align: center; max-width: 520px; margin: 8px auto 0; color: var(--mute); font-size: 15.5px; line-height: 23px; min-height: 46px; }
 @media (min-width: 920px) { .rrow { flex-direction: row; align-items: stretch; gap: 34px; }
   .rtabs { flex-direction: column; flex-wrap: nowrap; width: 280px; } .rtab { flex: 1; } .rstage { flex: 1; } }
-@media (max-width: 599px) { .trace-head { margin-left: 0; } .pin { width: 15px; height: 15px; font-size: 9px; } }
+@media (max-width: 599px) { .trace-head { margin-left: 0; } .pin { width: 15px; height: 15px; font-size: 9px; }
+  /* the three stages sit in one row so the stage they drive stays close to the trace */
+  .rrow { gap: 14px; margin-top: 18px; }
+  .rtabs { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+  .rtab { flex-direction: column; justify-content: center; gap: 5px; min-height: 76px; padding: 10px 4px; text-align: center; border-radius: 18px 6px 16px 9px; }
+  .rtab b { font-size: 14px; }
+  .rtab small { display: none; }
+  .rtab .sw { margin: 0; }
+  .rstage { padding: 14px 16px; }
+}
 
 @media (prefers-reduced-motion: no-preference) {
   .rtab.on .buddy { animation: zoom 0.32s ease-out; }
@@ -146,6 +169,7 @@ footer .body { font-size: 14.5px; max-width: 480px; }
 .foot { display: flex; flex-wrap: wrap; gap: 18px; font-size: 14.5px; }
 .foot a { text-decoration: none; }
 .foot a:hover { text-decoration: underline; }
+@media (pointer: coarse) { .foot { gap: 0 20px; } .foot a { padding: 10px 0; } .btn.compact { padding: 10px 16px; } }
 @media (min-width: 780px) { footer .wrap { flex-direction: row; align-items: flex-end; } footer .wrap > div:first-child { flex: 1; } }
 .pic img, .hero .art img, .scene img { width: 100%; }
 .marker img { max-width: none; }
