@@ -13,15 +13,15 @@
     advance2: 'Still calm, right again. Now just the numbers.',
     retreat1: 'Still high, and that answer missed. Now it steps back to dots.',
     retreat0: 'Still too much. Back to things you can count.',
-    arm: 'The load is high. The tutor slows down, and the picture waits for the learner to finish.',
+    arm: 'Arousal is high. The tutor slows down, and the picture waits for the learner to finish.',
     armed: 'Still high. A step back waits for the end of their turn.',
     shield: 'They got one right a moment ago, so the picture stays for now.',
-    rightUnderLoad: 'High load, but that answer was right. The picture stays.',
-    disarm: 'The load eased before their turn ended. Nothing to undo.',
+    rightUnderLoad: 'High arousal, but that answer was right. It holds this level one more turn.',
+    disarm: 'Arousal eased before their turn ended. Nothing to undo.',
     offer: 'Calm for a while. It may move on, once this one is answered.',
     offered: 'Still calm. It moves on as soon as this one is answered right.',
-    notYet: 'Room to move on, but that answer missed. Not yet.',
-    rising: 'Rising. The smoothed load has not crossed the line yet.',
+    notYet: 'Calm, but that answer missed. A hint, not a new picture.',
+    rising: 'Rising. Smoothed arousal has not crossed the line yet.',
     holdUp: 'Still high, but the picture just changed. Give it a moment.',
     holdDown: 'Easy again, but the picture just changed. Give it a moment.',
     patience: 'Calm once is not enough. It waits to be sure.',
@@ -102,7 +102,7 @@
       ? `<span class="pin" style="left:${(i * 100 / (H - 1)).toFixed(2)}%;top:${y(h.ema).toFixed(1)}px;background:${ST[h.stage]};color:${INK[h.stage]}">${h.stage + 1}</span>` : '').join('');
     dot.style.top = y(s.ema).toFixed(1) + 'px';
     val.textContent = s.ema.toFixed(2);
-    const z = s.ema > HIGH ? 'high' : s.ema < LOW ? 'easy' : 'keep';
+    const z = s.ema > HIGH ? 'high' : s.ema < LOW ? 'calm' : 'keep';
     zone.textContent = z; zone.classList.toggle('high', z === 'high');
     arm.hidden = !s.armed;
     tabs.forEach((t, i) => t.classList.toggle('on', i === s.stage));
