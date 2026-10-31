@@ -3,9 +3,9 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>EmotiMath — when should a math tutor make the picture simpler?</title>
-<meta name="description" content="EmotiMath pairs each answer with fingertip EDA to move one math problem between concrete, pictorial and abstract. Biosignal-driven adaptive representation in AI math tutoring, at the UIST 2026 Student Innovation Contest.">
-<meta property="og:title" content="EmotiMath — when should a math tutor make the picture simpler?">
+<title>EmotiMath — correctness and arousal jointly support learners at an impasse</title>
+<meta name="description" content="EmotiMath makes concreteness fading bidirectional and affect-aware: it pairs each answer with fingertip EDA to move one math problem between concrete, pictorial and abstract representations. UIST 2026 Student Innovation Contest.">
+<meta property="og:title" content="EmotiMath — correctness and arousal jointly support learners at an impasse">
 <meta property="og:description" content="Biosignal-driven adaptive representation in AI math tutoring. UIST 2026 Student Innovation Contest.">
 <meta name="theme-color" content="#FFFFFF">
 <link rel="icon" href="favicon.ico">
@@ -14,16 +14,15 @@
 <body>
 <nav><div class="wrap">
   <a class="brand" href="#top" aria-label="EmotiMath, back to top"><img src="art/buddy-mark.svg" alt="" width="86" height="72"><span>EmotiMath</span></a>
-  <div class="links"><a href="#fading">Fading</a><a href="#problem">Problem</a><a href="#demo">Demo setup</a><a href="#how">How it works</a><a href="#rules">Rules</a><a href="#readings">In action</a><a href="#next">Next</a></div>
+  <div class="links"><a href="#fading">Fading</a><a href="#problem">Problem</a><a href="#contribution">Contribution</a><a href="#demo">Demo setup</a><a href="#how">How it works</a><a href="#rules">Rules</a><a href="#readings">In action</a><a href="#next">Next</a></div>
   <a class="btn compact" href="https://github.com/EmotiMath" aria-label="EmotiMath on GitHub"><img src="art/github.svg" alt="" width="16" height="16"><span>GitHub</span></a>
 </div></nav>
 
 <main>
 <section id="top"><div class="wrap"><div class="hero">
   <div>
-    <p class="tag" style="margin-bottom:12px">at a glance · UIST 2026 Student Innovation Contest</p>
-    <h1>When should a math tutor make the picture <span class="marker"><img src="art/marker.svg" alt="" width="200" height="20">simpler?</span></h1>
-    <p class="lede" style="margin-top:22px;max-width:500px"><b>EmotiMath</b> pairs each answer with fingertip EDA to move one problem between concrete, pictorial and abstract.</p>
+    <h1>Correctness and arousal jointly support learners <span class="marker"><img src="art/marker.svg" alt="" width="200" height="20">at an impasse.</span></h1>
+    <p class="lede" style="margin-top:22px;max-width:500px"><b>EmotiMath</b> pairs each answer with fingertip EDA to move one problem between concrete, pictorial and abstract representations.</p>
     <p class="authors"><span class="nw">Wanglei Shen<sup>1</sup></span> · <span class="nw">Laura Alisa Bock<sup>1,2</sup></span> · <span class="nw">Manusha Karunathilaka<sup>3</sup></span></p>
     <p class="affil"><span class="nw"><sup>1</sup> ETH Zürich</span> &nbsp;<span class="nw"><sup>2</sup> FernUni Schweiz</span> &nbsp;<span class="nw"><sup>3</sup> Singapore Management University</span></p>
     <p style="margin:26px 0 0"><a class="btn" href="https://github.com/EmotiMath"><img src="art/github.svg" alt="" width="16" height="16">Code on GitHub<img src="art/arrow.svg" alt="" width="18" height="14"></a></p>
@@ -32,52 +31,56 @@
 </div></div></section>
 
 <section id="fading" class="alt"><div class="wrap">
-  <div class="head wide"><p class="tag">concreteness fading</p><h2>Pizzas first, then bars, then <span class="dfrac">1/2</span>&nbsp;=&nbsp;<span class="dfrac">2/4</span>.</h2>
-    <p class="lede">Concreteness fading [1], a proven scaffold, teaches a concept with relatable objects, then a visual diagram, then symbolic notation [2].</p></div>
-  <p class="oneway" aria-hidden="true"><span>classic fading runs one way</span><i></i></p>
+  <div class="head wide"><p class="tag">concreteness fading</p><h2>Pizzas first, bars next, then the equation.</h2>
+    <p class="lede">Concreteness fading [1], a proven scaffold, teaches a concept with relatable objects, moves to a visual diagram, and ends with symbolic notation [2].</p></div>
+  <button class="oneway" type="button" aria-pressed="false"><span>classic fading runs one way</span><i></i></button>
   <div class="ladder">
     <div class="card"><div class="art"><img class="lesson" src="art/pizzas.png" alt="Two matching pizzas: one cut in halves with one half left, one cut in quarters with two quarters left." width="2175" height="768"></div><strong><span class="sw" style="background:#FFC933"></span>1 · Concrete</strong><small>relatable objects</small></div>
     <div class="card"><div class="art"><img class="lesson" src="art/bars.png" alt="Two bars of the same length: one half shaded on top, two quarters shaded below." width="2175" height="768"></div><strong><span class="sw" style="background:#8A5A33"></span>2 · Pictorial</strong><small>visual diagram</small></div>
     <div class="card"><div class="art"><span class="fracs" role="img" aria-label="one half equals two quarters"><span class="frac"><span>1</span><span>2</span></span>=<span class="frac"><span>2</span><span>4</span></span></span></div><strong><span class="sw" style="background:#C9B6E8"></span>3 · Abstract</strong><small>symbolic notation</small></div>
   </div>
-  <p class="bridge"><span>But when should a tutor step back?</span></p>
+  <p class="bridge"><span>But does an AI tutor see more than the answer?</span></p>
 </div></section>
 
 <section id="problem"><div class="wrap">
-  <div class="head"><p class="tag">the problem</p><h2>Fading says how to scaffold, not when to step back.</h2></div>
+  <div class="head"><p class="tag">the problem</p><h2>Traditional AI math tutors adapt to answers, not affective states.</h2></div>
   <div class="tutors">
-    <div><div class="pic"><img src="art/problem-tutor.svg" alt="A puzzled learner, a tornado overhead, asking 3 × 2 = ?" width="170" height="90"></div>
-      <div><p class="tag">an answer-only AI tutor</p><h3>After a wrong answer, it just repeats the explanation.</h3></div></div>
-    <div><div class="pic duo"><img src="art/buddy.svg" alt="" width="86" height="72"><img src="art/problem-emotimath.svg" alt="Buddy redraws 3 × 2 as three groups of two dots." width="190" height="100.588"></div>
-      <div><p class="tag">EmotiMath</p><h3>Steps back one level when arousal stays high.</h3></div></div>
+    <div><div class="pic"><img src="art/problem-tutor.svg" alt="A stressed learner, a tornado overhead. Behind a new explanation, “Or: 2 + 2 + 2 …”, the earlier one, “3 × 2 is 3 + 3 …”, fades." width="430" height="191"></div>
+      <div><p class="tag">an answer-only AI tutor</p><h3>After an invalid answer, the tutor tries to give another similar explanation.</h3></div></div>
   </div>
 </div></section>
 
-<section id="demo" class="alt"><div class="wrap">
+<section id="contribution" class="alt"><div class="wrap">
+  <div class="head wide"><p class="tag">our contribution</p><h2>EmotiMath makes concreteness fading bidirectional and affect-aware.</h2>
+    <p class="lede">Classic fading moves only from concrete to abstract. EmotiMath adds the reverse step and decides after each answer, combining correctness with arousal estimated from fingertip EDA.</p></div>
+  <div class="scene"><img src="art/contribution-fork.svg" alt="The answer (correct or not) and the EmotiBit signal (a calm trace or a stress peak) feed Buddy, who decides after every answer. A correct answer while calm moves one step more abstract: pizzas to bars, or bars to one half equals two quarters. High arousal without a correct answer moves one step more concrete, back the same way. Otherwise the problem stays at its level." width="1026" height="436"></div>
+</div></section>
+
+<section id="demo"><div class="wrap">
   <div class="head"><p class="tag">demo setup</p><h2>Sit down and solve a few.</h2>
     <p class="lede">An iPad for you, a laptop for us, and a sensor in between.</p></div>
   <div class="scene"><img src="art/demo-table.svg" alt="The demo table: an iPad showing Buddy and a problem, a hand wearing the sensor, and a laptop showing the estimated arousal." width="900" height="330"></div>
   <div class="trio">
     <p class="body"><span class="n">1 </span><b>Tutor interface.</b> Learners talk with the AI tutor “Buddy” on an iPad.</p>
-    <p class="body"><span class="n">2 </span><b>Wearable sensor.</b> An EmotiBit on one fingertip records EDA signals.</p>
-    <p class="body"><span class="n">3 </span><b>Monitor display.</b> It shows the estimated arousal and the adaptation decision.</p>
+    <p class="body"><span class="n">2 </span><b>Wearable sensor.</b> Users wear EmotiBit on one fingertip and let it record EDA signals.</p>
+    <p class="body"><span class="n">3 </span><b>Monitor display.</b> It shows the estimated arousal and adaptation decision.</p>
   </div>
   <p class="tag" style="margin-top:14px;font-size:16px">Rather not wear the sensor? We can play back a recorded session instead.</p>
 </div></section>
 
-<section id="how"><div class="wrap">
+<section id="how" class="alt"><div class="wrap">
   <div class="head"><p class="tag">system pipeline</p><h2>A calibrated baseline drives each per-answer adaptation.</h2></div>
   <div class="steps">
-    <div><div class="icon"><img src="art/step-sense.svg" alt="A hand with the EmotiBit on a fingertip, streaming." width="166" height="128"></div><p class="num">1.</p><h3>Sense</h3><p class="body">EmotiBit records electrodermal activity (EDA) at one fingertip.</p></div>
-    <div><div class="icon"><img src="art/step-calibrate.svg" alt="A gauge labelled arousal." width="150" height="110"></div><p class="num">2.</p><h3>Calibrate</h3><p class="body">A one minute calibration sets the personalized baseline.</p></div>
-    <div><div class="icon"><img src="art/step-decide.svg" alt="A decision tree: a right answer leads to advance or hold, a wrong one to hint or step back." width="177" height="130"></div><p class="num">3.</p><h3>Decide</h3><p class="body">Based on answers and signals, the system decides the next action.</p></div>
-    <div><div class="icon"><img src="art/step-redraw.svg" alt="A pencil redrawing a row of squares." width="150" height="110"></div><p class="num">4.</p><h3>Adapt</h3><p class="body">The same problem is shown one level more concrete or abstract.</p></div>
+    <div><div class="icon"><img src="art/step-sense.svg" alt="A hand with the EmotiBit on a fingertip, streaming." width="166" height="128"></div><p class="num">1.</p><h3>Sense</h3><p class="body">EmotiBit records EDA signals at one fingertip.</p></div>
+    <div><div class="icon"><img src="art/step-calibrate.svg" alt="A gauge labelled arousal." width="150" height="110"></div><p class="num">2.</p><h3>Calibrate</h3><p class="body">A one-minute calibration sets the personalized baseline.</p></div>
+    <div><div class="icon"><img src="art/step-decide.svg" alt="A decision tree: a right answer leads to advance or hold, a wrong one to hint or step back." width="177" height="130"></div><p class="num">3.</p><h3>Decide</h3><p class="body">Answers and signals together decide the next action.</p></div>
+    <div><div class="icon"><img src="art/step-adapt.svg" alt="Three tiles, half a pizza, two bars and one half equals two quarters, between a green arrow toward abstract and a red arrow back toward concrete." width="150" height="110"></div><p class="num">4.</p><h3>Adapt</h3><p class="body">The same problem is shown one level more concrete or abstract.</p></div>
   </div>
   <p class="body note">Arousal model: a logistic regression on tonic EDA, trained on WESAD [3] and MAUS [4], reaches an offline AUC of 0.725 on MAUS; it has not yet been validated on EmotiBit.</p>
 </div></section>
 
-<section id="rules" class="alt"><div class="wrap">
-  <div class="head"><p class="tag">decision rules</p><h2>Adapting representation to answers and arousal.</h2></div>
+<section id="rules"><div class="wrap">
+  <div class="head"><p class="tag">decision rules</p><h2>Correctness and arousal jointly set the next step.</h2></div>
     <div class="grid" role="table" aria-label="Decision rules">
       <div role="row" class="colhead"><span role="columnheader"></span><span role="columnheader" class="tag">calm</span><span role="columnheader" class="tag">high arousal</span></div>
       <div role="row"><span role="rowheader"><b>✓ correct answer</b></span>
@@ -90,7 +93,7 @@
     <p class="body note">A correct answer within 90 s blocks a step back; a step back cannot be undone for 20 s.</p>
 </div></section>
 
-<section id="readings"><div class="wrap">
+<section id="readings" class="alt"><div class="wrap">
   <div class="head"><p class="tag">in action</p><h2>It waits for the right moment.</h2>
     <p class="lede">A sample arousal trace through the tutor's real rule. The picture only changes when the learner finishes a turn: a right answer holds it, a miss under high arousal steps it back.</p></div>
   <div class="trace-head"><p class="tag">the learner's estimated arousal</p>
@@ -117,16 +120,16 @@
   </div>
 </div></section>
 
-<section id="next" class="alt"><div class="wrap">
+<section id="next"><div class="wrap">
   <div class="head"><p class="tag">future work</p><h2>Validation, evaluation, personalization.</h2></div>
   <div class="next">
     <ol class="future">
       <li><b>Validate the arousal model on EmotiBit</b><span>Collect labeled EmotiBit recordings and re-evaluate the model.</span></li>
-      <li><b>Evaluate with learners</b><span>A user study will test whether stepping back shortens the time to a correct answer.</span></li>
+      <li><b>Evaluate with learners</b><span>Test effectiveness and engagement with learners in a user study.</span></li>
       <li><b>Personalize the representation</b><span>Which representation suits which learner?</span></li>
     </ol>
     <div class="side">
-      <div class="glance"><p class="tag">at a glance</p><p><b>Finding.</b> <mark>EDA tracks task difficulty as well as distress, so it cannot decide alone.</mark> <b>Next.</b> Validate on EmotiBit recordings and test with learners.</p></div>
+      <div class="glance"><p class="tag">at a glance</p><p><b>Approach.</b> Each answer is paired with fingertip EDA to move one problem between concrete, pictorial and abstract representations. <b>Why.</b> <mark>Correctness alone cannot decide when a learner needs more guidance.</mark> <b>Next.</b> Validate on EmotiBit recordings and test with learners.</p></div>
     </div>
   </div>
 </div></section>
@@ -147,7 +150,7 @@
     <div class="qr todo"><span class="code" aria-hidden="true">video QR<br>coming soon</span><b>Demo video</b><small>Link coming soon</small></div>
   </div>
   <div class="fbottom">
-    <div class="foot"><a href="#fading">Fading</a> <a href="#problem">Problem</a> <a href="#demo">Demo setup</a> <a href="#how">How it works</a> <a href="#rules">Rules</a> <a href="#readings">In action</a> <a href="#next">Next</a> <a href="https://github.com/EmotiMath">GitHub</a></div>
+    <div class="foot"><a href="#fading">Fading</a> <a href="#problem">Problem</a> <a href="#contribution">Contribution</a> <a href="#demo">Demo setup</a> <a href="#how">How it works</a> <a href="#rules">Rules</a> <a href="#readings">In action</a> <a href="#next">Next</a> <a href="https://github.com/EmotiMath">GitHub</a></div>
     <details><summary>References and thanks</summary>
       <p class="body refs">[1] Fyfe et al. Educ. Psychol. Rev. 2014. [2] Chatain et al. Educ. Psychol. Rev. 2025. [3] Schmidt et al. WESAD. ICMI 2018. [4] Beh et al. MAUS. arXiv 2021.</p>
       <p class="body refs">We thank our mentors April Wang, Julia Chatain and Jiannan Li.</p></details>

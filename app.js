@@ -114,6 +114,14 @@
   // Reduce Motion: the loop rests on its opening frame.
   if (!matchMedia('(prefers-reduced-motion: reduce)').matches) setInterval(() => draw(push()), TICK);
 
+  // the fading arrow: classic runs one way; pressed, it shows EmotiMath's way back
+  const way = $('.oneway'), wayText = way.querySelector('span');
+  way.onclick = () => {
+    const back = way.getAttribute('aria-pressed') !== 'true';
+    way.setAttribute('aria-pressed', back);
+    wayText.textContent = back ? 'EmotiMath can also step back' : 'classic fading runs one way';
+  };
+
   const strip = $('.links'), links = strip.querySelectorAll('a');
   const smooth = matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth';
   const io = new IntersectionObserver((es) => es.forEach((e) => {

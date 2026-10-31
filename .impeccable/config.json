@@ -1,0 +1,26 @@
+{
+  "detector": {
+    "ignoreRules": [],
+    "ignoreFiles": [],
+    "ignoreValues": [
+      {
+        "rule": "side-tab",
+        "value": "*",
+        "files": [
+          "style.css"
+        ],
+        "createdAt": "2026-10-30T12:21:54.619Z",
+        "reason": "Claude triage: style.css flag is a CSS-triangle arrowhead (border-left on .oneway i::after), not a card accent"
+      },
+      {
+        "rule": "border-accent-on-rounded",
+        "value": "*",
+        "files": [
+          "style.css"
+        ],
+        "createdAt": "2026-10-30T12:21:54.809Z",
+        "reason": "Claude triage: style.css flag is the fraction bar (border-bottom on .frac span), not a card accent"
+      }
+    ]
+  }
+}
