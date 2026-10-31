@@ -122,16 +122,18 @@
     wayText.textContent = back ? 'EmotiMath can also step back' : 'classic fading runs one way';
   };
 
-  const strip = $('.links'), links = strip.querySelectorAll('a');
-  const smooth = matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth';
+  const links = document.querySelectorAll('.links a');
   const io = new IntersectionObserver((es) => es.forEach((e) => {
     if (!e.isIntersecting) return;
-    links.forEach((a) => {
-      const on = a.hash === '#' + e.target.id;
-      a.classList.toggle('on', on);
-      // on phones the links are a swipeable strip: bring the current one to its middle
-      if (on && strip.scrollWidth > strip.clientWidth) strip.scrollTo({ left: a.offsetLeft - (strip.clientWidth - a.offsetWidth) / 2, behavior: smooth });
-    });
+    links.forEach((a) => a.classList.toggle('on', a.hash === '#' + e.target.id));
   }), { rootMargin: '-45% 0px -54% 0px' });
+
+  // narrow screens: the links fold into a menu; it closes on a pick, a tap outside, or Esc
+  const nav = $('nav'), menu = $('.menu');
+  const setOpen = (open) => { nav.classList.toggle('open', open); menu.setAttribute('aria-expanded', open); };
+  menu.onclick = () => setOpen(!nav.classList.contains('open'));
+  links.forEach((a) => a.addEventListener('click', () => setOpen(false)));
+  document.addEventListener('click', (e) => { if (nav.classList.contains('open') && !nav.contains(e.target)) setOpen(false); });
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && nav.classList.contains('open')) { setOpen(false); menu.focus(); } });
   document.querySelectorAll('main section').forEach((s) => io.observe(s));
 })();

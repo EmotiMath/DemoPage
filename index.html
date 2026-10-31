@@ -14,8 +14,9 @@
 <body>
 <nav><div class="wrap">
   <a class="brand" href="#top" aria-label="EmotiMath, back to top"><img src="art/buddy-mark.svg" alt="" width="86" height="72"><span>EmotiMath</span></a>
-  <div class="links"><a href="#fading">Fading</a><a href="#problem">Problem</a><a href="#contribution">Contribution</a><a href="#demo">Demo setup</a><a href="#how">How it works</a><a href="#rules">Rules</a><a href="#readings">In action</a><a href="#next">Next</a></div>
+  <div class="links" id="sections"><a href="#fading">Fading</a><a href="#problem">Problem</a><a href="#contribution">Contribution</a><a href="#demo">Demo setup</a><a href="#how">How it works</a><a href="#rules">Rules</a><a href="#readings">In action</a><a href="#next">Next</a></div>
   <a class="btn compact" href="https://github.com/EmotiMath" aria-label="EmotiMath on GitHub"><img src="art/github.svg" alt="" width="16" height="16"><span>GitHub</span></a>
+  <button class="menu" type="button" aria-expanded="false" aria-controls="sections" aria-label="Sections"><i></i></button>
 </div></nav>
 
 <main>
@@ -53,7 +54,8 @@
 <section id="contribution" class="alt"><div class="wrap">
   <div class="head wide"><p class="tag">our contribution</p><h2>EmotiMath makes concreteness fading bidirectional and affect-aware.</h2>
     <p class="lede">Classic fading moves only from concrete to abstract. EmotiMath adds the reverse step and decides after each answer, combining correctness with arousal estimated from fingertip EDA.</p></div>
-  <div class="scene"><img src="art/contribution-fork.svg" alt="The answer (correct or not) and the EmotiBit signal (a calm trace or a stress peak) feed Buddy, who decides after every answer. A correct answer while calm moves one step more abstract: pizzas to bars, or bars to one half equals two quarters. High arousal without a correct answer moves one step more concrete, back the same way. Otherwise the problem stays at its level." width="1026" height="436"></div>
+  <!-- phones get the same parts stacked (art/contribution-fork-tall.svg), so its lettering stays readable -->
+  <div class="scene"><picture><source media="(max-width: 639px)" srcset="art/contribution-fork-tall.svg" width="486" height="726"><img src="art/contribution-fork.svg" alt="The answer (correct or not) and the EmotiBit signal (a calm trace or a stress peak) feed Buddy, who decides after every answer. A correct answer while calm moves one step more abstract: pizzas to bars, or bars to one half equals two quarters. High arousal without a correct answer moves one step more concrete, back the same way. Otherwise the problem stays at its level." width="1026" height="436"></picture></div>
 </div></section>
 
 <section id="demo"><div class="wrap">

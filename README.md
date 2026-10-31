@@ -10,6 +10,7 @@ Plain files, served by GitHub Pages from `main`:
 | `style.css`   | All styles, including section snapping and the nav underline            |
 | `app.js`      | ~4 KB: the "In action" loop and the nav underline                       |
 | `art/*.svg`   | The drawings.`hero.svg` carries its own animation (tablet, butterfly) |
+| `art/contribution-fork-tall.svg` | Phones' version of `contribution-fork.svg`: the same parts restacked; redo it when that one changes |
 | `favicon.ico` | Tab icon                                                                |
 
 It mirrors the landing page of the app
