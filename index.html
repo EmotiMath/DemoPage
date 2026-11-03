@@ -26,7 +26,6 @@
     <p class="lede" style="margin-top:22px;max-width:500px"><b>EmotiMath</b> pairs each answer with fingertip EDA to move one problem between concrete, pictorial and abstract representations.</p>
     <p class="authors"><span class="nw">Wanglei Shen<sup>1</sup></span> · <span class="nw">Laura Alisa Bock<sup>1,2</sup></span> · <span class="nw">Manusha Karunathilaka<sup>3</sup></span></p>
     <p class="affil"><span class="nw"><sup>1</sup> ETH Zürich</span> &nbsp;<span class="nw"><sup>2</sup> FernUni Schweiz</span> &nbsp;<span class="nw"><sup>3</sup> Singapore Management University</span></p>
-    <p style="margin:26px 0 0"><a class="btn" href="https://github.com/EmotiMath"><img src="art/github.svg" alt="" width="16" height="16">Code on GitHub<img src="art/arrow.svg" alt="" width="18" height="14"></a></p>
   </div>
   <div class="art"><img src="art/hero.svg" alt="A child, chin on fist, looks at a tablet showing three groups of two, drawn in turn as apples, dots and the sum 3 × 2 = 6, while Buddy asks how many there are in all." width="620" height="440"></div>
 </div></div></section>
@@ -55,19 +54,17 @@
   <div class="head wide"><p class="tag">our contribution</p><h2>EmotiMath makes concreteness fading bidirectional and affect-aware.</h2>
     <p class="lede">Classic fading moves only from concrete to abstract. EmotiMath adds the reverse step and decides after each answer, combining correctness with arousal estimated from fingertip EDA.</p></div>
   <!-- phones get the same parts stacked (art/contribution-fork-tall.svg), so its lettering stays readable -->
-  <div class="scene"><picture><source media="(max-width: 759px)" srcset="art/contribution-fork-tall.svg" width="486" height="688"><img src="art/contribution-fork.svg" alt="The answer (correct or not) and the EmotiBit signal (a calm trace or a stress peak) feed Buddy, who decides after every answer. A correct answer while calm moves one step more abstract: pizzas to bars, or bars to one half equals two quarters. High arousal without a correct answer moves one step more concrete, back the same way. Otherwise the problem stays at its level." width="1026" height="436"></picture></div>
+  <div class="scene"><picture><source media="(max-width: 759px)" srcset="art/contribution-fork-tall.svg" width="486" height="610"><img src="art/contribution-fork.svg" alt="The answer (correct or not) and the EmotiBit signal (a calm trace or a stress peak) feed Buddy, who decides after every answer. A correct answer while calm moves one step more abstract: pizzas to bars, or bars to one half equals two quarters. High arousal without a correct answer moves one step more concrete, back the same way. Otherwise the problem stays at its level." width="1026" height="436"></picture></div>
 </div></section>
 
-<section id="demo"><div class="wrap">
-  <div class="head"><p class="tag">demo setup</p><h2>Sit down and solve a few.</h2>
-    <p class="lede">An iPad for you, a laptop for us, and a sensor in between.</p></div>
+<section id="demo"><div class="wrap narrow">
+  <div class="head"><p class="tag">demo setup</p><h2>Sit down and solve a few.</h2></div>
   <div class="scene"><img src="art/demo-table.svg" alt="The demo table: an iPad showing Buddy and a problem, a hand wearing the sensor, and a laptop showing the estimated arousal." width="900" height="330"></div>
   <div class="trio">
     <p class="body"><span class="n">1 </span><b>Tutor interface.</b> Learners talk with the AI tutor “Buddy” on an iPad.</p>
     <p class="body"><span class="n">2 </span><b>Wearable sensor.</b> Users wear EmotiBit on one fingertip and let it record EDA signals.</p>
     <p class="body"><span class="n">3 </span><b>Monitor display.</b> It shows the estimated arousal and adaptation decision.</p>
   </div>
-  <p class="tag" style="margin-top:14px;font-size:16px">Rather not wear the sensor? We can play back a recorded session instead.</p>
 </div></section>
 
 <section id="how" class="alt"><div class="wrap">
@@ -78,10 +75,10 @@
     <div><div class="icon"><img style="--w:177" src="art/step-decide.svg" alt="A decision tree: a right answer leads to advance or hold, a wrong one to hint or step back." width="177" height="130"></div><p class="num">3.</p><h3>Decide</h3><p class="body">Answers and signals together decide the next action.</p></div>
     <div><div class="icon"><img style="--w:150" src="art/step-adapt.svg" alt="Three tiles, half a pizza, two bars and one half equals two quarters, between a green arrow toward abstract and a red arrow back toward concrete." width="150" height="110"></div><p class="num">4.</p><h3>Adapt</h3><p class="body">The same problem is shown one level more concrete or abstract.</p></div>
   </div>
-  <p class="body note">Arousal model: a logistic regression on tonic EDA, trained on WESAD [3] and MAUS [4], reaches an offline AUC of 0.725 on MAUS; it has not yet been validated on EmotiBit.</p>
+  <p class="body note fine"><b>Arousal model</b> A logistic regression on tonic EDA, trained on WESAD [3] and MAUS [4], reaches an offline AUC of 0.725 on MAUS; it has not yet been validated on EmotiBit.</p>
 </div></section>
 
-<section id="rules"><div class="wrap">
+<section id="rules"><div class="wrap narrow">
   <div class="head"><p class="tag">decision rules</p><h2>Correctness and arousal jointly set the next step.</h2></div>
     <div class="grid" role="table" aria-label="Decision rules">
       <div role="row" class="colhead"><span role="columnheader"></span><span role="columnheader" class="tag">calm</span><span role="columnheader" class="tag">high arousal</span></div>
@@ -99,7 +96,7 @@
   <div class="head"><p class="tag">in action</p><h2>It waits for the right moment.</h2>
     <p class="lede">A sample arousal trace through the tutor's real rule. The picture only changes when the learner finishes a turn: a right answer holds it, a miss under high arousal steps it back.</p></div>
   <div class="trace-head"><p class="tag">the learner's estimated arousal</p>
-    <p class="read"><span id="rl-val" class="val">0.25</span><span id="rl-zone" class="cause">calm</span><span id="rl-arm" class="cause" hidden>step back at turn end</span></p></div>
+    <p class="read"><span id="rl-val" class="val">0.23</span><span id="rl-zone" class="cause">calm</span><span id="rl-arm" class="cause" hidden>step back at turn end</span></p></div>
   <div class="trace">
     <div class="zones" aria-hidden="true"><span style="top:12px">high</span><span style="top:38px">keep</span><span style="top:65px">calm</span></div>
     <div class="plot">
@@ -107,10 +104,10 @@
         <rect x="0" y="6.0" width="1000" height="29.4" fill="#F08C84" opacity="0.3"/>
         <rect x="0" y="58.1" width="1000" height="31.9" fill="#8CC152" opacity="0.22"/>
         <path d="M0 35.4 H1000 M0 58.1 H1000" fill="none" stroke="#1B1B1B" stroke-width="1.4" stroke-dasharray="4 5" vector-effect="non-scaling-stroke"/>
-        <polyline id="rl-line" points="0.0,72.6 7.1,72.6 14.2,72.4 21.3,72.0 28.4,72.0 35.5,72.0 42.6,72.2 49.6,72.2 56.7,72.2 63.8,72.3 70.9,72.5 78.0,72.5 85.1,72.4 92.2,71.8 99.3,71.1 106.4,70.4 113.5,70.1 120.6,69.9 127.7,69.9 134.8,69.9 141.8,69.9 148.9,69.9 156.0,70.0 163.1,70.1 170.2,70.0 177.3,70.0 184.4,70.1 191.5,70.3 198.6,70.5 205.7,70.7 212.8,71.1 219.9,71.2 227.0,71.2 234.0,71.0 241.1,70.3 248.2,69.6 255.3,68.8 262.4,67.7 269.5,66.6 276.6,65.8 283.7,64.7 290.8,63.6 297.9,62.5 305.0,59.1 312.1,55.6 319.1,51.9 326.2,50.8 333.3,49.7 340.4,48.7 347.5,47.7 354.6,46.8 361.7,46.0 368.8,46.3 375.9,46.6 383.0,46.8 390.1,45.3 397.2,43.8 404.3,42.2 411.3,40.5 418.4,38.9 425.5,37.5 432.6,36.2 439.7,35.0 446.8,33.8 453.9,32.9 461.0,31.8 468.1,30.5 475.2,29.5 482.3,28.4 489.4,27.4 496.5,26.6 503.5,25.9 510.6,25.3 517.7,24.8 524.8,24.2 531.9,23.6 539.0,23.1 546.1,22.5 553.2,21.8 560.3,21.4 567.4,21.2 574.5,21.1 581.6,21.0 588.7,21.1 595.7,21.2 602.8,21.4 609.9,21.5 617.0,21.5 624.1,21.4 631.2,21.3 638.3,21.2 645.4,21.0 652.5,20.9 659.6,20.8 666.7,21.0 673.8,21.1 680.9,21.1 687.9,21.2 695.0,21.1 702.1,20.9 709.2,21.1 716.3,21.3 723.4,21.7 730.5,23.1 737.6,24.6 744.7,26.2 751.8,28.2 758.9,30.1 766.0,32.0 773.0,33.8 780.1,35.6 787.2,37.4 794.3,39.3 801.4,41.5 808.5,43.8 815.6,46.1 822.7,48.5 829.8,50.8 836.9,52.6 844.0,54.3 851.1,55.8 858.2,56.7 865.2,57.6 872.3,58.5 879.4,59.5 886.5,60.7 893.6,61.9 900.7,62.5 907.8,63.1 914.9,63.5 922.0,63.8 929.1,64.1 936.2,64.4 943.3,64.5 950.4,64.8 957.4,65.3 964.5,65.8 971.6,66.5 978.7,67.1 985.8,67.8 992.9,68.4 1000.0,68.8" fill="none" stroke="#1B1B1B" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" vector-effect="non-scaling-stroke"/>
+        <polyline id="rl-line" points="0.0,72.6 5.5,72.5 10.9,72.4 16.4,72.1 21.9,72.1 27.3,72.1 32.8,72.2 38.3,72.0 43.7,71.9 49.2,71.9 54.6,72.1 60.1,72.3 65.6,72.5 71.0,72.3 76.5,72.0 82.0,71.6 87.4,71.4 92.9,71.1 98.4,70.8 103.8,70.3 109.3,69.9 114.8,69.5 120.2,69.5 125.7,69.6 131.1,69.7 136.6,70.0 142.1,70.4 147.5,70.7 153.0,70.7 158.5,70.6 163.9,70.4 169.4,70.0 174.9,69.6 180.3,69.2 185.8,68.6 191.3,68.1 196.7,67.7 202.2,67.0 207.7,66.4 213.1,65.8 218.6,65.0 224.0,64.0 229.5,63.0 235.0,59.7 240.4,56.3 245.9,52.9 251.4,52.0 256.8,51.1 262.3,50.2 267.8,49.1 273.2,48.0 278.7,47.0 284.2,47.1 289.6,47.2 295.1,47.3 300.5,45.8 306.0,44.2 311.5,42.6 316.9,40.7 322.4,38.7 327.9,36.8 333.3,35.0 338.8,33.3 344.3,31.7 349.7,30.6 355.2,29.6 360.7,28.6 366.1,28.2 371.6,27.8 377.0,27.3 382.5,26.8 388.0,26.2 393.4,25.5 398.9,24.8 404.4,24.1 409.8,23.4 415.3,23.1 420.8,22.9 426.2,22.7 431.7,22.8 437.2,22.9 442.6,23.0 448.1,22.9 453.6,22.7 459.0,22.5 464.5,22.3 469.9,21.9 475.4,21.6 480.9,21.3 486.3,21.1 491.8,20.9 497.3,20.5 502.7,20.3 508.2,20.1 513.7,20.1 519.1,20.1 524.6,20.1 530.1,20.3 535.5,20.4 541.0,20.4 546.4,20.8 551.9,21.1 557.4,21.5 562.8,22.8 568.3,24.1 573.8,25.6 579.2,27.6 584.7,29.8 590.2,31.9 595.6,33.8 601.1,35.7 606.6,37.5 612.0,38.8 617.5,40.0 623.0,41.2 628.4,41.8 633.9,42.4 639.3,43.0 644.8,43.4 650.3,43.8 655.7,44.3 661.2,44.5 666.7,44.8 672.1,45.1 677.6,45.4 683.1,45.7 688.5,45.8 694.0,45.9 699.5,45.9 704.9,45.9 710.4,45.6 715.8,45.4 721.3,45.2 726.8,45.3 732.2,45.4 737.7,45.7 743.2,46.0 748.6,46.3 754.1,46.5 759.6,46.5 765.0,46.5 770.5,46.3 776.0,46.3 781.4,46.2 786.9,46.2 792.3,46.4 797.8,46.6 803.3,47.0 808.7,47.8 814.2,48.7 819.7,49.6 825.1,50.9 830.6,52.2 836.1,53.4 841.5,54.6 847.0,55.7 852.5,56.7 857.9,57.7 863.4,58.7 868.9,59.7 874.3,60.6 879.8,61.7 885.2,62.8 890.7,63.5 896.2,64.2 901.6,64.8 907.1,65.5 912.6,66.0 918.0,66.5 923.5,66.5 929.0,66.4 934.4,66.3 939.9,66.5 945.4,66.7 950.8,67.1 956.3,67.3 961.7,67.7 967.2,68.1 972.7,68.5 978.1,68.9 983.6,69.2 989.1,69.7 994.5,70.1 1000.0,70.4" fill="none" stroke="#1B1B1B" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" vector-effect="non-scaling-stroke"/>
       </svg>
-      <div id="rl-pins"><span class="pin" style="left:4.26%;top:71.9px;background:#8A5A33;color:#FFFFFF">2</span><span class="pin" style="left:21.28%;top:70.8px;background:#C9B6E8;color:#1B1B1B">3</span><span class="pin" style="left:59.57%;top:21.3px;background:#8A5A33;color:#FFFFFF">2</span><span class="pin" style="left:74.47%;top:26.7px;background:#FFC933;color:#1B1B1B">1</span></div>
-      <span id="rl-dot" class="tdot" style="top:68.9px"></span>
+      <div id="rl-pins"><span class="pin" style="left:3.28%;top:71.9px;background:#8A5A33;color:#FFFFFF">2</span><span class="pin" style="left:16.39%;top:70.8px;background:#C9B6E8;color:#1B1B1B">3</span><span class="pin" style="left:45.90%;top:21.3px;background:#8A5A33;color:#FFFFFF">2</span><span class="pin" style="left:57.38%;top:26.7px;background:#FFC933;color:#1B1B1B">1</span></div>
+      <span id="rl-dot" class="tdot" style="top:70.5px"></span>
     </div>
   </div>
   <div class="rrow">
@@ -144,17 +141,16 @@
 </main>
 
 <footer><div class="wrap">
-  <div class="fbrand"><a class="brand" href="#top"><img src="art/buddy-mark.svg" alt="" width="86" height="72">EmotiMath</a>
-    <p class="body">Biosignal-driven adaptive representation in AI math tutoring. A research prototype.</p></div>
+  <div class="fbrand">
+    <p class="refs-h">References and thanks</p>
+    <p class="body refs">[1] Fyfe et al. Educ. Psychol. Rev. 2014. [2] Chatain et al. Educ. Psychol. Rev. 2025. [3] Schmidt et al. WESAD. ICMI 2018. [4] Beh et al. MAUS. arXiv 2021.</p>
+    <p class="body refs">We thank our mentors April Wang, Julia Chatain and Jiannan Li.</p></div>
   <div class="qrs">
     <a class="qr" href="https://doi.org/10.1145/3830397.3841316"><span class="code"><img src="art/qr-paper.svg" alt="QR code for the paper" width="219" height="219"></span><b>Paper</b><small>doi.org/10.1145/<wbr>3830397.3841316</small></a>
     <a class="qr" href="https://www.youtube.com/watch?v=Rc1iRpaRpB0&amp;list=PLdLNmfEPLFVM&amp;index=4&amp;t=9s"><span class="code"><img src="art/qr-video.svg" alt="QR code for the demo video" width="219" height="219"></span><b>Demo video</b><small>youtube.com/<wbr>watch?v=Rc1iRpaRpB0</small></a>
   </div>
   <div class="fbottom">
     <div class="foot"><a href="#fading">Fading</a> <a href="#problem">Problem</a> <a href="#contribution">Contribution</a> <a href="#demo">Demo setup</a> <a href="#how">How it works</a> <a href="#rules">Rules</a> <a href="#readings">In action</a> <a href="#next">Next</a> <a href="https://github.com/EmotiMath">GitHub</a></div>
-    <details><summary>References and thanks</summary>
-      <p class="body refs">[1] Fyfe et al. Educ. Psychol. Rev. 2014. [2] Chatain et al. Educ. Psychol. Rev. 2025. [3] Schmidt et al. WESAD. ICMI 2018. [4] Beh et al. MAUS. arXiv 2021.</p>
-      <p class="body refs">We thank our mentors April Wang, Julia Chatain and Jiannan Li.</p></details>
   </div>
 </div></footer>
 <script src="app.js" defer></script>

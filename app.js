@@ -3,10 +3,12 @@
   // one reading per 5 s window; null = window skipped for movement. Ends where it starts, so it loops.
   const RAW = [0.22, 0.18, 0.25, 0.2, 0.24, 0.21, 0.27, 0.23, 0.26, 0.22, 0.2, 0.24,
     0.28, 0.34, 0.42, 0.5, 0.93, 0.58, 0.66, null, 0.78, 0.86, 0.9, 0.88, 0.84, 0.86, 0.88, 0.85,
-    0.83, 0.86, 0.84, 0.82, 0.86, 0.84, 0.8, 0.72, 0.55, 0.42, 0.34, 0.26, 0.2, 0.18, 0.22, 0.19,
-    0.24, 0.2, 0.22];
+    0.83, 0.86, 0.84, 0.82, 0.86, 0.84, 0.8, 0.72, 0.55,
+    // after the step back it settles mid-band for a while (keep) before easing to calm
+    0.42, 0.4, 0.42, 0.46, 0.5, 0.53, 0.5, 0.48, 0.52, 0.5, 0.49, 0.52, 0.5, 0.48, 0.4, 0.3,
+    0.24, 0.2, 0.18, 0.22, 0.19, 0.24, 0.2, 0.22];
   // where a learner turn ends in that window: R a right answer, W a wrong or unsure one
-  const TURN = RAW.map((_, i) => i === 3 || i === 11 ? 'R' : [8, 24, 29, 36, 44].includes(i) ? 'W' : '');
+  const TURN = RAW.map((_, i) => i === 3 || i === 11 ? 'R' : [8, 24, 29, 36, 46, 58].includes(i) ? 'W' : '');
   const LOW = 0.38, HIGH = 0.65, ALPHA = 0.2, DWELL = 4, SHIELD = 18, TICK = 1500, W = 1000, TH = 96;
   const CAP = {
     advance1: 'Calm, and that answer was right. On to dots.',

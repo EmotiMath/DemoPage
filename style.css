@@ -11,12 +11,14 @@ html { scroll-snap-type: y mandatory; scroll-padding-top: var(--nav); -webkit-te
 @media (prefers-reduced-motion: no-preference) { html { scroll-behavior: smooth; } }
 body { margin: 0; background: var(--paper); color: var(--ink); font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; -webkit-font-smoothing: antialiased; }
 a { color: inherit; }
-a, button, summary { -webkit-tap-highlight-color: rgba(255, 201, 51, 0.4); }
+a, button { -webkit-tap-highlight-color: rgba(255, 201, 51, 0.4); }
 ::selection { background: var(--sun); color: var(--ink); }
 :focus-visible { outline: 3px solid var(--ink); outline-offset: 3px; border-radius: 6px; }
 svg, img { display: block; }
 img { max-width: 100%; height: auto; }
 .wrap { width: 100%; max-width: 1200px; margin: 0 auto; padding: 0 var(--gut-r) 0 var(--gut-l); }
+/* sections whose content is narrower than the page: centre the whole column, heading included, so the mass sits mid-screen */
+.wrap.narrow { max-width: calc(820px + var(--gut-l) + var(--gut-r)); }
 
 /* nav */
 nav { position: sticky; top: 0; z-index: 10; background: var(--paper); border-bottom: 2px solid var(--ink); }
@@ -69,7 +71,7 @@ section.alt { background: var(--soft); }
 /* phones and short landscape screens: sections outgrow one screen, so drop the snap and the full-screen height */
 @media (max-width: 759px), (max-height: 599px) {
   html { scroll-snap-type: none; }
-  section { min-height: 0; padding: 56px 0; }
+  section { min-height: 0; padding: 28px 0; }
 }
 .tag { font-family: var(--hand); font-size: 17px; color: var(--mute); margin: 0; }
 .head { max-width: 640px; margin-bottom: clamp(22px, 3.6vh, 44px); }
@@ -168,7 +170,7 @@ h2 { font-size: clamp(28px, 3.6vw, 44px); line-height: 1.12; letter-spacing: -0.
 
 /* decision rules */
 /* one table grid; each row borrows its tracks (subgrid), and the 1fr rows give all four decision cells one size */
-.grid { display: grid; grid-template-columns: 170px 1fr 1fr; grid-template-rows: auto; grid-auto-rows: 1fr; gap: 10px; max-width: 760px; }
+.grid { display: grid; grid-template-columns: 170px 1fr 1fr; grid-template-rows: auto; grid-auto-rows: 1fr; gap: 10px; }
 .grid [role=row] { display: grid; grid-column: 1 / -1; grid-template-columns: subgrid; grid-template-rows: subgrid; align-items: center; }
 .grid .cell { align-self: stretch; }
 .colhead span { text-align: center; }
@@ -180,6 +182,8 @@ h2 { font-size: clamp(28px, 3.6vw, 44px); line-height: 1.12; letter-spacing: -0.
 .adv { background: #E1E7DA; } .hold { background: #E5E4DF; }
 .hint { background: var(--paper); } .back { background: #F8DED4; }
 .note { margin-top: 12px; font-size: 14.5px; }
+.fine { margin-top: 28px; padding-top: 14px; border-top: 2px dashed var(--mute); font-size: 13.5px; line-height: 21px; }
+.fine b { display: block; font-family: var(--hand); font-weight: 400; font-size: 16px; color: var(--ink); }
 @media (max-width: 599px) {
   /* each answer row is a full-width header over its two cells */
   .grid { grid-template-columns: 1fr 1fr; grid-auto-rows: auto 1fr; gap: 8px; }
@@ -257,7 +261,9 @@ h2 { font-size: clamp(28px, 3.6vw, 44px); line-height: 1.12; letter-spacing: -0.
 
 /* what's next */
 .next { display: grid; gap: 32px; }
-@media (min-width: 900px) { .next { grid-template-columns: 1.2fr 1fr; align-items: start; } }
+@media (min-width: 900px) { .next { grid-template-columns: 1.2fr 1fr; align-items: start; }
+  /* the list spans the summary box: item 1 starts at its top edge, item 3 ends at its bottom edge */
+  .future { align-self: stretch; align-content: space-between; } }
 .future { list-style: none; counter-reset: q; margin: 0; padding: 0; display: grid; gap: 24px; }
 .future li { counter-increment: q; display: grid; grid-template-columns: 40px 1fr; column-gap: 16px; }
 .future li::before { content: counter(q); grid-row: span 2; display: flex; align-items: center; justify-content: center;
@@ -272,6 +278,7 @@ h2 { font-size: clamp(28px, 3.6vw, 44px); line-height: 1.12; letter-spacing: -0.
 
 /* vote: one ask, on its own band */
 section.vote { min-height: 0; padding: clamp(48px, 9vh, 104px) 0; background: var(--sun); border-top: 2px solid var(--ink); }
+@media (max-width: 759px), (max-height: 599px) { section.vote { padding: 28px 0; } }
 .vote .wrap { display: flex; align-items: center; gap: clamp(16px, 3vw, 36px); }
 .vote img { flex: none; width: clamp(72px, 10vw, 128px); }
 .vote h2 { font-size: clamp(30px, 4.4vw, 56px); }
@@ -294,10 +301,9 @@ a.qr:hover b { text-decoration: underline; }
 .foot { display: flex; flex-wrap: wrap; gap: 18px; font-size: 14.5px; }
 .foot a { text-decoration: none; }
 .foot a:hover { text-decoration: underline; }
-details { max-width: 560px; font-size: 14.5px; }
-summary { cursor: pointer; }
-details .refs { margin-top: 8px; font-size: 13px; line-height: 19px; }
-@media (pointer: coarse), (max-width: 599px) { .oneway { min-height: 44px; } .foot { gap: 0 20px; } .foot a { padding: 12px 0; } summary { padding: 12px 0; } .btn.compact { padding: 10px 16px; } }
+.refs-h { margin: 4px 0 0; font-weight: 700; font-size: 14.5px; }
+.refs { margin-top: 6px; font-size: 13px; line-height: 19px; }
+@media (pointer: coarse), (max-width: 599px) { .oneway { min-height: 44px; } .foot { gap: 0 20px; } .foot a { padding: 12px 0; } .btn.compact { padding: 10px 16px; } }
 @media (max-width: 599px) {
   .qrs { display: grid; gap: 10px; }
   .qr { width: auto; justify-items: start; gap: 1px; padding: 12px 16px; text-align: left; background: var(--paper); border: 2px solid var(--ink); border-radius: 14px 5px 12px 7px; }
