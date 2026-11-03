@@ -290,7 +290,6 @@ footer .body { font-size: 14.5px; max-width: 420px; }
 .qr b { font-size: 15px; }
 .qr small { font-size: 12px; line-height: 16px; color: var(--mute); }
 a.qr:hover b { text-decoration: underline; }
-.qr.todo .code { border-style: dashed; background: transparent; font-family: var(--hand); font-size: 14px; line-height: 1.35; color: var(--mute); }
 .fbottom { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-start; gap: 8px 28px; padding-top: 16px; border-top: 1px solid rgba(27, 27, 27, 0.18); }
 .foot { display: flex; flex-wrap: wrap; gap: 18px; font-size: 14.5px; }
 .foot a { text-decoration: none; }
@@ -304,7 +303,6 @@ details .refs { margin-top: 8px; font-size: 13px; line-height: 19px; }
   .qr { width: auto; justify-items: start; gap: 1px; padding: 12px 16px; text-align: left; background: var(--paper); border: 2px solid var(--ink); border-radius: 14px 5px 12px 7px; }
   .qr .code { display: none; }
   .qr b { font-size: 16px; } .qr small { font-size: 13px; line-height: 18px; }
-  .qr.todo { border-style: dashed; background: transparent; }
   a.qr:active { background: var(--sun); }
 }
 @media (min-width: 780px) { footer .wrap { grid-template-columns: 1fr auto; align-items: start; } .fbottom { grid-column: 1 / -1; } }
