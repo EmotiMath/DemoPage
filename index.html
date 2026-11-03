@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>EmotiMath — correctness and arousal jointly support learners at an impasse</title>
 <meta name="description" content="EmotiMath makes concreteness fading bidirectional and affect-aware: it pairs each answer with fingertip EDA to move one math problem between concrete, pictorial and abstract representations. UIST 2026 Student Innovation Contest.">
 <meta property="og:title" content="EmotiMath — correctness and arousal jointly support learners at an impasse">
@@ -55,7 +55,7 @@
   <div class="head wide"><p class="tag">our contribution</p><h2>EmotiMath makes concreteness fading bidirectional and affect-aware.</h2>
     <p class="lede">Classic fading moves only from concrete to abstract. EmotiMath adds the reverse step and decides after each answer, combining correctness with arousal estimated from fingertip EDA.</p></div>
   <!-- phones get the same parts stacked (art/contribution-fork-tall.svg), so its lettering stays readable -->
-  <div class="scene"><picture><source media="(max-width: 639px)" srcset="art/contribution-fork-tall.svg" width="486" height="726"><img src="art/contribution-fork.svg" alt="The answer (correct or not) and the EmotiBit signal (a calm trace or a stress peak) feed Buddy, who decides after every answer. A correct answer while calm moves one step more abstract: pizzas to bars, or bars to one half equals two quarters. High arousal without a correct answer moves one step more concrete, back the same way. Otherwise the problem stays at its level." width="1026" height="436"></picture></div>
+  <div class="scene"><picture><source media="(max-width: 759px)" srcset="art/contribution-fork-tall.svg" width="486" height="688"><img src="art/contribution-fork.svg" alt="The answer (correct or not) and the EmotiBit signal (a calm trace or a stress peak) feed Buddy, who decides after every answer. A correct answer while calm moves one step more abstract: pizzas to bars, or bars to one half equals two quarters. High arousal without a correct answer moves one step more concrete, back the same way. Otherwise the problem stays at its level." width="1026" height="436"></picture></div>
 </div></section>
 
 <section id="demo"><div class="wrap">
@@ -73,10 +73,10 @@
 <section id="how" class="alt"><div class="wrap">
   <div class="head"><p class="tag">system pipeline</p><h2>A calibrated baseline drives each per-answer adaptation.</h2></div>
   <div class="steps">
-    <div><div class="icon"><img src="art/step-sense.svg" alt="A hand with the EmotiBit on a fingertip, streaming." width="166" height="128"></div><p class="num">1.</p><h3>Sense</h3><p class="body">EmotiBit records EDA signals at one fingertip.</p></div>
-    <div><div class="icon"><img src="art/step-calibrate.svg" alt="A gauge labelled arousal." width="150" height="110"></div><p class="num">2.</p><h3>Calibrate</h3><p class="body">A one-minute calibration sets the personalized baseline.</p></div>
-    <div><div class="icon"><img src="art/step-decide.svg" alt="A decision tree: a right answer leads to advance or hold, a wrong one to hint or step back." width="177" height="130"></div><p class="num">3.</p><h3>Decide</h3><p class="body">Answers and signals together decide the next action.</p></div>
-    <div><div class="icon"><img src="art/step-adapt.svg" alt="Three tiles, half a pizza, two bars and one half equals two quarters, between a green arrow toward abstract and a red arrow back toward concrete." width="150" height="110"></div><p class="num">4.</p><h3>Adapt</h3><p class="body">The same problem is shown one level more concrete or abstract.</p></div>
+    <div><div class="icon"><img style="--w:166" src="art/step-sense.svg" alt="A hand with the EmotiBit on a fingertip, streaming." width="166" height="128"></div><p class="num">1.</p><h3>Sense</h3><p class="body">EmotiBit records EDA signals at one fingertip.</p></div>
+    <div><div class="icon"><img style="--w:150" src="art/step-calibrate.svg" alt="A gauge labelled arousal." width="150" height="110"></div><p class="num">2.</p><h3>Calibrate</h3><p class="body">A one-minute calibration sets the personalized baseline.</p></div>
+    <div><div class="icon"><img style="--w:177" src="art/step-decide.svg" alt="A decision tree: a right answer leads to advance or hold, a wrong one to hint or step back." width="177" height="130"></div><p class="num">3.</p><h3>Decide</h3><p class="body">Answers and signals together decide the next action.</p></div>
+    <div><div class="icon"><img style="--w:150" src="art/step-adapt.svg" alt="Three tiles, half a pizza, two bars and one half equals two quarters, between a green arrow toward abstract and a red arrow back toward concrete." width="150" height="110"></div><p class="num">4.</p><h3>Adapt</h3><p class="body">The same problem is shown one level more concrete or abstract.</p></div>
   </div>
   <p class="body note">Arousal model: a logistic regression on tonic EDA, trained on WESAD [3] and MAUS [4], reaches an offline AUC of 0.725 on MAUS; it has not yet been validated on EmotiBit.</p>
 </div></section>

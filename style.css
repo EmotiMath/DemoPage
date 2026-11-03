@@ -3,6 +3,8 @@
   --leaf: #8CC152; --hot: #F08C84; --lav: #C9B6E8; --pen: 2.4px;
   --hand: "Segoe Print", "Bradley Hand", "Marker Felt", "Comic Sans MS", cursive;
   --gut: clamp(20px, 5vw, 72px); --nav: 66px;
+  /* the gutter, widened past the notch and rounded corners on a landscape phone */
+  --gut-l: max(var(--gut), env(safe-area-inset-left)); --gut-r: max(var(--gut), env(safe-area-inset-right));
 }
 * { box-sizing: border-box; }
 html { scroll-snap-type: y mandatory; scroll-padding-top: var(--nav); -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
@@ -14,7 +16,7 @@ a, button, summary { -webkit-tap-highlight-color: rgba(255, 201, 51, 0.4); }
 :focus-visible { outline: 3px solid var(--ink); outline-offset: 3px; border-radius: 6px; }
 svg, img { display: block; }
 img { max-width: 100%; height: auto; }
-.wrap { width: 100%; max-width: 1200px; margin: 0 auto; padding: 0 var(--gut); }
+.wrap { width: 100%; max-width: 1200px; margin: 0 auto; padding: 0 var(--gut-r) 0 var(--gut-l); }
 
 /* nav */
 nav { position: sticky; top: 0; z-index: 10; background: var(--paper); border-bottom: 2px solid var(--ink); }
@@ -41,7 +43,7 @@ nav .btn { margin-left: 8px; flex: none; }
   .menu[aria-expanded="true"] i::before { top: 0; transform: rotate(45deg); }
   .menu[aria-expanded="true"] i::after { top: 0; transform: rotate(-45deg); }
   .links { display: none; position: absolute; left: 0; right: 0; top: calc(100% + 2px); flex-direction: column; align-items: stretch; gap: 0;
-    margin: 0; padding: 6px var(--gut) 14px; background: var(--paper); border-bottom: 2px solid var(--ink); box-shadow: 0 14px 24px rgba(27, 27, 27, 0.10); }
+    margin: 0; padding: 6px var(--gut-r) 14px var(--gut-l); background: var(--paper); border-bottom: 2px solid var(--ink); box-shadow: 0 14px 24px rgba(27, 27, 27, 0.10); }
   nav.open .links { display: flex; }
   .links a { padding: 13px 12px; font-size: 18px; border-bottom: 1px solid var(--soft); }
   .links a:last-child { border-bottom: 0; }
@@ -104,7 +106,7 @@ h2 { font-size: clamp(28px, 3.6vw, 44px); line-height: 1.12; letter-spacing: -0.
 .tutors { display: grid; gap: 30px; max-width: 900px; }
 .tutors > div { display: grid; grid-template-columns: 112px 1fr; column-gap: 16px; align-items: center; }
 .tutors h3 { font-size: clamp(19px, 2.2vw, 26px); line-height: 1.2; margin-top: 4px; }
-@media (max-width: 599px) { .tutors > div { grid-template-columns: 1fr; row-gap: 14px; } .tutors .pic { max-width: 400px; } }
+@media (max-width: 599px) { .tutors > div { grid-template-columns: 1fr; row-gap: 14px; } .tutors .pic { max-width: 300px; } }
 @media (min-width: 600px) { .tutors > div { grid-template-columns: 220px 1fr; column-gap: 32px; } }
 @media (min-width: 880px) { .tutors > div { grid-template-columns: 280px 1fr; column-gap: 40px; } }
 
@@ -152,25 +154,23 @@ h2 { font-size: clamp(28px, 3.6vw, 44px); line-height: 1.12; letter-spacing: -0.
 @media (min-width: 1080px) { .ladder .card { padding: 18px 24px; } }
 
 /* four steps */
-.steps { display: grid; gap: 24px; }
+.steps { display: grid; gap: 28px 16px; }
 .steps .icon { height: 130px; display: flex; align-items: flex-end; margin-bottom: 10px; }
-.steps .icon img { width: 150px; }
+/* the icons share one drawing scale (--w is each one's width at it, the widest 177px); a narrower column shrinks all four by the same ratio */
+.steps .icon img { width: calc(var(--w) * 1px); max-width: calc(var(--w) / 177 * 100%); }
 .steps .num { font-family: var(--hand); font-size: 22px; margin: 0; }
 .steps h3 { font-size: 20px; margin: 4px 0 6px; }
 .steps .body { font-size: 15px; line-height: 22px; }
-@media (max-width: 599px) {
-  .steps { gap: 26px; }
-  .steps > div { display: grid; grid-template-columns: 128px 1fr; column-gap: 14px; align-items: start; }
-  .steps > div .icon { grid-row: 1 / 4; height: auto; margin: 0; padding-top: 6px; }
-  .steps > div .icon img { width: 128px; }
-  .steps h3 { margin-top: 0; }
-}
-@media (min-width: 620px) { .steps { grid-template-columns: 1fr 1fr; } }
+/* two columns even on phones, so the icons keep enough width for their lettering */
+@media (min-width: 360px) { .steps { grid-template-columns: 1fr 1fr; } }
+@media (min-width: 620px) { .steps { gap: 24px; } }
 @media (min-width: 920px) { .steps { grid-template-columns: repeat(4, 1fr); } }
 
 /* decision rules */
-.grid { display: grid; gap: 10px; max-width: 760px; }
-.grid [role=row] { display: grid; grid-template-columns: 170px 1fr 1fr; gap: 10px; align-items: center; }
+/* one table grid; each row borrows its tracks (subgrid), and the 1fr rows give all four decision cells one size */
+.grid { display: grid; grid-template-columns: 170px 1fr 1fr; grid-template-rows: auto; grid-auto-rows: 1fr; gap: 10px; max-width: 760px; }
+.grid [role=row] { display: grid; grid-column: 1 / -1; grid-template-columns: subgrid; grid-template-rows: subgrid; align-items: center; }
+.grid .cell { align-self: stretch; }
 .colhead span { text-align: center; }
 .grid [role=rowheader] b { display: block; font-size: 16px; }
 .grid small { display: block; margin-top: 2px; font-size: 13.5px; color: var(--mute); }
@@ -181,8 +181,9 @@ h2 { font-size: clamp(28px, 3.6vw, 44px); line-height: 1.12; letter-spacing: -0.
 .hint { background: var(--paper); } .back { background: #F8DED4; }
 .note { margin-top: 12px; font-size: 14.5px; }
 @media (max-width: 599px) {
-  .grid { gap: 8px; }
-  .grid [role=row] { grid-template-columns: 1fr 1fr; gap: 8px; }
+  /* each answer row is a full-width header over its two cells */
+  .grid { grid-template-columns: 1fr 1fr; grid-auto-rows: auto 1fr; gap: 8px; }
+  .grid [role=row]:not(.colhead) { grid-row: span 2; }
   .colhead span:first-child { display: none; }
   .grid [role=rowheader] { grid-column: 1 / -1; display: flex; flex-wrap: wrap; align-items: baseline; gap: 0 8px; margin-top: 8px; }
   .grid [role=rowheader] b { font-size: 15px; } .grid small { font-size: 13px; margin: 0; }
@@ -244,9 +245,10 @@ h2 { font-size: clamp(28px, 3.6vw, 44px); line-height: 1.12; letter-spacing: -0.
 
 /* demo */
 .scene { max-width: 900px; margin: 0 auto; }
-@media (max-width: 599px) { .scene { margin: 0 calc(8px - var(--gut)); } }
+/* the demo table bleeds toward the edges on phones; the fork keeps the text's gutter so its flow lines don't touch the screen edge */
+@media (max-width: 599px) { #demo .scene { margin: 0 calc(8px - var(--gut)); } }
 .scene picture { display: block; }
-@media (max-width: 639px) { .scene picture { max-width: 486px; margin: 0 auto; } }
+@media (max-width: 759px) { .scene picture { max-width: 486px; margin: 0 auto; } }
 .trio { display: grid; gap: 10px 24px; margin-top: 18px; }
 .trio p { font-size: 15.5px; }
 .trio b { color: var(--ink); }
@@ -276,7 +278,7 @@ section.vote { min-height: 0; padding: clamp(48px, 9vh, 104px) 0; background: va
 .vote p { margin: 8px 0 0; font-weight: 700; font-size: clamp(16px, 1.6vw, 20px); text-wrap: balance; }
 
 /* footer: who and where, the two links worth scanning, the rest folded away */
-footer { background: var(--soft); border-top: 2px solid var(--ink); padding: clamp(36px, 5vw, 56px) 0 clamp(20px, 3vw, 32px); scroll-snap-align: end; }
+footer { background: var(--soft); border-top: 2px solid var(--ink); padding: clamp(36px, 5vw, 56px) 0 calc(clamp(20px, 3vw, 32px) + env(safe-area-inset-bottom)); scroll-snap-align: end; }
 footer .wrap { display: grid; gap: 28px; }
 footer .brand { margin-bottom: 6px; }
 footer .body { font-size: 14.5px; max-width: 420px; }
@@ -308,4 +310,3 @@ details .refs { margin-top: 8px; font-size: 13px; line-height: 19px; }
 @media (min-width: 780px) { footer .wrap { grid-template-columns: 1fr auto; align-items: start; } .fbottom { grid-column: 1 / -1; } }
 .pic img, .hero .art img, .scene img { width: 100%; }
 .marker img { max-width: none; }
-.steps .icon img { width: auto; }
